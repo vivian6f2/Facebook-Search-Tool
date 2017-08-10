@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<!--
+	author: Lin Ting Hsuan
+	date: 2017/03/28
+	student ID: 5071-2121-13
+	email: tinghsul@usc.edu
+-->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Homework8</title>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+		<link href="hw8.css" rel="stylesheet" type="text/css"/>	
+		<script src="hw8.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  		<script src="https://momentjs.com/downloads/moment-timezone.js"></script>
+    	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>
+    	<script src="https://momentjs.com/downloads/moment.min.js"></script>
+		<script src="https://momentjs.com/downloads/moment-timezone.min.js"></script>
+	</head>
+	<body ng-app="myApp" ng-controller="myCtrl">
+		<div class="row" style="background-color: #F8F8F8; margin:0px;">
+			<div class="col-md-3" style="color:#3b5998;">
+				<span style="">FB Search</span>
+			</div>
+			<div class="col-md-6" style="text-align:center; padding:10px; padding-left:20px; padding-bottom:5px; vertical-align:top;">
+				<form class="input-group" style="border-radius:0px;" id="searchBar">
+					<input class="form-control" id="keyword" type="text" name="keyword" placeholder="type something..." style="border-radius: 0px;" ng-model="keyword">
+					<span class="input-group-btn" style="vertical-align: top;">
+						<button id="searchButton" class="btn" style="" type="submit" ng-click="Search()">
+							<span class="glyphicon glyphicon-search" style=""></span>
+						</button>
+					</span>
+					&nbsp;&nbsp;
+					<span class="input-group-btn" style="vertical-align: top;">
+						<button class="btn btn-secondary" style="" ng-click="clickClear()" type="button">Clear</button>
+					</span>
+				</form>
+			</div>
+		</div>
+		<div style="border-bottom: 2px solid #3b5998; padding:0px; margin:0px;">
+			<ul class="nav nav-pills nav-justified" style='padding:0px; margin:0px;'>
+				<li class="col-2" ng-class="{active: current_tab == 'users'}" ng-click="clickFunc('users')" style='padding:0px; margin:0px;'><a>Users</a></li>
+				<li class="col-2" ng-class="{active: current_tab == 'pages'}" ng-click="clickFunc('pages')" style='padding:0px; margin:0px;'><a>Pages</a></li>
+				<li class="col-2" ng-class="{active: current_tab == 'events'}" ng-click="clickFunc('events')" style='padding:0px; margin:0px;'><a>Events</a></li>
+				<li class="col-2" ng-class="{active: current_tab == 'places'}" ng-click="clickFunc('places')" style='padding:0px; margin:0px;'><a>Places</a></li>
+				<li class="col-2" ng-class="{active: current_tab == 'groups'}" ng-click="clickFunc('groups')" style='padding:0px; margin:0px;'><a>Groups</a></li>
+				<li class="col-2" ng-class="{active: current_tab == 'favorites'}" ng-click="clickFunc('favorites')" style='padding:0px; margin:0px;'><a>Favorites</a></li>
+			</ul>
+		</div>
+		<div>{{show}}</div>
+		<div class="animate2" ng-hide="changeToDetail">
+			<div ng-show="showList" class="showListContainer">
+				<div class="table-responsive" ng-show="showUserList">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Profile photo</th>
+								<th>Name</th>
+								<th>Favorite</th>
+								<th>Details</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="user in userdata.data">
+								<td>{{$index+1}}</td>
+								<td>
+									<img class="img-circle" style="width:40px; height:40px;" ng-src="{{user.picture.data.url}}"> 
+								</td>
+								<td>{{user.name}}</td>
+								<td class="">
+									<button class="btn btn-link" ng-style="getColor(user.id)" ng-click="setFavorite(user.id ,user.picture.data.url ,user.name, 'users')">
+										<span class="glyphicon" ng-class="getClass(user.id)"></span>
+									</button>
+									<!-- <button class="btn btn-link " style="" type="button" ng-click="addFavorite(user.id ,user.picture.data.url ,user.name ,'users')" ng-hide="isFavorite(user.id)">
+										<span class="glyphicon glyphicon-star-empty" style=""></span>
+									</button>
+									<button class="btn btn-link " style="color:gold;" type="button" ng-click="removeFavorite(user.id)" ng-show="isFavorite(user.id)">
+										<span class="glyphicon glyphicon-star" style=""></span>
+									</button> -->
+								</td>
+								<td>
+									<button class="btn btn-link" style="" type="button" ng-click="showDetail(user.id)">
+										<span class="glyphicon glyphicon-chevron-right" style=""></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="table-responsive" ng-show="showPageList">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Profile photo</th>
+								<th>Name</th>
+								<th>Favorite</th>
+								<th>Details</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="page in pagedata.data">
+								<td>{{$index+1}}</td>
+								<td>
+									<img class="img-circle" style="width:40px; height:40px;" ng-src="{{page.picture.data.url}}">
+								</td>
+								<td>{{page.name}}</td>
+								<td>
+									<button class="btn btn-link" ng-style="getColor(page.id)" ng-click="setFavorite(page.id ,page.picture.data.url ,page.name, 'pages')">
+										<span class="glyphicon" ng-class="getClass(page.id)"></span>
+									</button><!-- 
+									<button class="btn btn-link " style="" type="button" ng-click="addFavorite(page.id ,page.picture.data.url ,page.name ,'pages')" ng-hide="isFavorite(page.id)">
+										<span class="glyphicon glyphicon-star-empty" style=""></span>
+									</button>
+									<button class="btn btn-link " style="color:gold;" type="button" ng-click="removeFavorite(page.id)" ng-show="isFavorite(page.id)">
+										<span class="glyphicon glyphicon-star" style=""></span>
+									</button> -->
+								</td>
+								<td>
+									<button class="btn btn-link" style="" type="button" ng-click="showDetail(page.id)">
+										<span class="glyphicon glyphicon-chevron-right" style=""></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="table-responsive" ng-show="showEventList">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Profile photo</th>
+								<th>Name</th>
+								<th>Favorite</th>
+								<th>Details</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="event in eventdata.data">
+								<td>{{$index+1}}</td>
+								<td>
+									<img class="img-circle" style="width:40px; height:40px;" ng-src="{{event.picture.data.url}}">
+								</td>
+								<td>{{event.name}}</td>
+								<td>
+									<button class="btn btn-link" ng-style="getColor(event.id)" ng-click="setFavorite(event.id ,event.picture.data.url ,event.name, 'events')">
+										<span class="glyphicon" ng-class="getClass(event.id)"></span>
+									</button>
+									<!-- <button class="btn btn-link " style="" type="button" ng-click="addFavorite(event.id ,event.picture.data.url ,event.name ,'events')" ng-hide="isFavorite(event.id)">
+										<span class="glyphicon glyphicon-star-empty" style=""></span>
+									</button>
+									<button class="btn btn-link " style="color:gold;" type="button" ng-click="removeFavorite(event.id)" ng-show="isFavorite(event.id)">
+										<span class="glyphicon glyphicon-star" style=""></span>
+									</button> -->
+								</td>
+								<td>
+									<button class="btn btn-link" style="" type="button" ng-click="showDetail(event.id)">
+										<span class="glyphicon glyphicon-chevron-right" style=""></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="table-responsive" ng-show="showPlaceList">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Profile photo</th>
+								<th>Name</th>
+								<th>Favorite</th>
+								<th>Details</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="place in placedata.data">
+								<td>{{$index+1}}</td>
+								<td>
+									<img class="img-circle" style="width:40px; height:40px;" ng-src="{{place.picture.data.url}}">
+								</td>
+								<td>{{place.name}}</td>
+								<td>
+									<button class="btn btn-link" ng-style="getColor(place.id)" ng-click="setFavorite(place.id ,place.picture.data.url ,place.name, 'places')">
+										<span class="glyphicon" ng-class="getClass(place.id)"></span>
+									</button>
+									<!-- <button class="btn btn-link " style="" type="button" ng-click="addFavorite(place.id ,place.picture.data.url ,place.name ,'places')" ng-hide="isFavorite(place.id)">
+										<span class="glyphicon glyphicon-star-empty" style=""></span>
+									</button>
+									<button class="btn btn-link " style="color:gold;" type="button" ng-click="removeFavorite(place.id)" ng-show="isFavorite(place.id)">
+										<span class="glyphicon glyphicon-star" style=""></span>
+									</button> -->
+								</td>
+								<td>
+									<button class="btn btn-link" style="" type="button" ng-click="showDetail(place.id)">
+										<span class="glyphicon glyphicon-chevron-right" style=""></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="table-responsive" ng-show="showGroupList">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Profile photo</th>
+								<th>Name</th>
+								<th>Favorite</th>
+								<th>Details</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="group in groupdata.data">
+								<td>{{$index+1}}</td>
+								<td>
+									<img class="img-circle" style="width:40px; height:40px;" ng-src="{{group.picture.data.url}}">
+								</td>
+								<td>{{group.name}}</td>
+								<td>
+									<button class="btn btn-link" ng-style="getColor(group.id)" ng-click="setFavorite(group.id ,group.picture.data.url ,group.name, 'groups')">
+										<span class="glyphicon" ng-class="getClass(group.id)"></span>
+									</button>
+									<!-- <button class="btn btn-link " style="" type="button" ng-click="addFavorite(group.id ,group.picture.data.url ,group.name ,'groups')" ng-hide="isFavorite(group.id)">
+										<span class="glyphicon glyphicon-star-empty" style=""></span>
+									</button>
+									<button class="btn btn-link " style="color:gold;" type="button" ng-click="removeFavorite(group.id)" ng-show="isFavorite(group.id)">
+										<span class="glyphicon glyphicon-star" style=""></span>
+									</button> -->
+								</td>
+								<td>
+									<button class="btn btn-link" style="" type="button" ng-click="showDetail(group.id)">
+										<span class="glyphicon glyphicon-chevron-right" style=""></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="table-responsive" ng-show="showFavoriteList">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Profile photo</th>
+								<th>Name</th>
+								<th>Type</th>
+								<th>Favorite</th>
+								<th>Details</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="favorite in favoritedata">
+								<td>{{$index+1}}</td>
+								<td>
+									<img class="img-circle" style="width:40px; height:40px;" ng-src="{{favorite.picture}}">
+								</td>
+								<td>{{favorite.name}}</td>
+								<td>{{favorite.type}}</td>
+								<td>
+									<button class="btn btn-link" style="color:black;" type="button" ng-click="removeFavoriteAndUpdate(favorite.id)" ng-show="isFavorite(favorite.id)">
+										<span class="glyphicon glyphicon-trash" style=""></span>
+									</button>
+								</td>
+								<td>
+									<button class="btn btn-link" style="" type="button" ng-click="showDetail(favorite.id)">
+										<span class="glyphicon glyphicon-chevron-right" style=""></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="container vertical-center" style="vertical-align: middle;">
+					<div class="progress" ng-show="showProgressBar" style=" margin-top:15%;"> <!-- showProgressBar -->
+						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+						</div>
+					</div>
+				</div>
+
+				<div class="text-center">
+  					<ul class="pagination text-center pagination-lg" ng-show="showPrevious" style="margin-left:10px; margin-right:10px;" >
+    					<li class="page-item">
+    						<a class="page-link" ng-click="clickPrev()">Previous</a>
+    					</li>
+  					</ul>
+  					<ul class="pagination text-center pagination-lg" ng-show="showNext" style="margin-left:10px; margin-right:10px;">
+    					<li class="page-item">
+    						<a class="page-link" ng-click="clickNext()">Next</a>
+    					</li>
+  					</ul>
+				</div>
+			</div>
+		</div>
+		<div ng-show="showDetailPage" class="detailContainer animate">
+			<button class="btn btn-link" style="" type="button" ng-click="hideDetail()">
+				<span class="glyphicon glyphicon-chevron-left" style=""></span>
+				<span>Back</span>
+			</button>
+			<span ng-show="showDetailButton" style="float:right;">
+				<button class="btn btn-link" ng-style="getColor(currentDetailID)" ng-click="setFavorite(currentDetailID ,detaildata.picture.url ,detaildata.name, current_tab)">
+					<span class="glyphicon" ng-class="getClass(currentDetailID)"></span>
+				</button>
+				<!-- <button class="btn btn-link " style="" type="button" ng-click="addFavorite(currentDetailID ,detaildata.picture.url ,detaildata.name ,current_tab)" ng-hide="isFavorite(currentDetailID)">
+					<span class="glyphicon glyphicon-star-empty" style=""></span>
+				</button>
+				<button class="btn btn-link " style="color:gold;" type="button" ng-click="removeFavorite(currentDetailID)" ng-show="isFavorite(currentDetailID)">
+					<span class="glyphicon glyphicon-star" style=""></span>
+				</button> -->
+				<button class="btn btn-link" type="button" style="" ng-click="FBPost()">
+					<img class="img" style="width:20px;" src="http://cs-server.usc.edu:45678/hw/hw8/images/facebook.png">
+				</button>
+			</span>
+			<br><br>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Albums
+						</div>
+						<div class="panel-body">
+							<div class="progress" ng-show="detailProgressBar">
+  								<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+  								</div>
+							</div>
+							<div class="panel panel-warning" ng-show="showNoAlbums">
+								<div class="panel-heading">
+									No data found.
+								</div>
+							</div>
+							<div class="panel-group" ng-show="showAlbums" id="albumList">
+								<div class="panel panel-default" ng-repeat="album in detaildata.albums">
+									<div class="panel-heading panel-title">
+										<a data-toggle = "collapse" data-parent="#albumList" href="{{'#album'+$index}}">
+											{{album.name}}
+										</a>
+									</div>
+									<div id="{{'album'+$index}}" class="panel-collapse collapse" ng-class="{'in': $index==0}">
+										<div class="panel-body" ng-repeat="picture in album.photos">
+											<img class="img-rounded" style="width: 100%;" ng-src="{{picture.picture}}">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Posts
+						</div>
+						<div class="panel-body">
+							<div class="progress" ng-show="detailProgressBar">
+  								<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+  								</div>
+							</div>
+							<div class="panel panel-warning" ng-show="showNoPosts">
+								<div class="panel-heading">
+									No data found.
+								</div>
+							</div>
+							<div class="panel-group" ng-show="showPosts" id="postList" >
+								<!-- {{detaildata.posts}} -->
+								<div class="panel panel-default" ng-repeat="post in detaildata.posts">
+									<div class="panel-body">
+										<div class="row" >
+											<div class="col-md-2 col-xs-3 col-sm-3">
+												<img class="" style="width:40px;" ng-src="{{detaildata.picture.url}}">
+											</div>
+											<div class="col-md-10 col-xs-9 col-sm-9"  style="padding-left:0px;">
+												<span>{{detaildata.name}}</span><br>
+												<span style="color:#AAA;">{{getLocalTime(post.created_time.date)}}</span>
+											</div>
+										</div>
+										<br>
+										<div class="">
+											{{post.message}}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+					
+	</body>
+</html>

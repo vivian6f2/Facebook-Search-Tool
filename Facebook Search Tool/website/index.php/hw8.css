@@ -1,0 +1,214 @@
+@media screen and (max-width:768px){
+
+	.showListContainer{
+		margin-top:30px;
+		margin-left:20px;
+		margin-right:20px;
+	}
+	.detailContainer{
+		margin-top:20px;
+		margin-left:20px;
+		margin-right:20px;
+	}
+	.col-md-3{
+		font-size:20px; 
+		vertical-align: middle;  
+		padding-top:12px; 
+		padding-left:20px;
+	}
+	.nav-pills > li > a,
+	.nav-pills > li > a:hover,
+	.nav-pills > li > a:focus{
+		border:0px solid white;
+		//border-bottom: 2px solid #3b5998;
+		border-radius:0px;
+		color: black;
+		background-color:white;
+		//padding:0px;
+		margin:0px;
+		line-height: 4px;
+	}
+	.nav-pills > li.active > a,
+	.nav-pills > li.active > a:hover,
+	.nav-pills > li.active > a:focus{
+		border:0px solid white;
+		//border-bottom: 2px solid #3b5998;
+		border-radius:0px;
+		background-color:#3b5998;
+		color:white;
+		//padding:0px;
+		margin:0px;
+		line-height: 4px;
+	}
+	#searchButton{
+		border-radius:0px; 
+		padding:6px 12px;  
+		text-align:center; 
+		background-color: #3b5998; 
+		margin-top:0px;
+	}
+}
+
+@media screen and (min-width:768px){
+
+	.showListContainer{
+		margin-top:30px;
+		margin-left:20px;
+		margin-right:20px;
+	}
+	.detailContainer{
+		margin-top:20px;
+		margin-left:20px;
+		margin-right:20px;
+	}
+	.col-md-3{
+		 font-size:20px; 
+		 vertical-align: middle;  
+		 padding-top:12px; 
+		 padding-left:40px;
+	}
+	.nav-pills > li > a,
+	.nav-pills > li > a:hover,
+	.nav-pills > li > a:focus{
+		border:0px solid white;
+		//border-bottom: 2px solid #3b5998;
+		border-radius:0px;
+		color: black;
+		background-color:white;
+		//padding:0px;
+		margin:0px;
+	}
+	.nav-pills > li.active > a,
+	.nav-pills > li.active > a:hover,
+	.nav-pills > li.active > a:focus{
+		border:0px solid white;
+		//border-bottom: 2px solid #3b5998;
+		border-radius:0px;
+		background-color:#3b5998;
+		color:white;
+		//padding:0px;
+		margin:0px;
+	}
+	#searchButton{
+		border-radius:0px; 
+		padding:6px 25px;  
+		text-align:center; 
+		background-color: #3b5998; 
+		margin-top:0px;
+	}
+
+}
+.panel-heading > a:hover,
+.panel-heading > a:focus{
+	color:#4169E1;
+}
+.animate.ng-hide {
+  transform: translate(-100%,0);
+}
+
+.animate.ng-hide-remove {
+  -webkit-transition:all 0.4s linear;
+  -moz-transition:all 0.4s linear;
+  -o-transition:all 0.4s linear;
+  transition:all 0.4s linear;
+}
+
+.animate2.ng-hide {
+  transform: translate(100%,0);
+}
+
+
+.animate2.ng-hide-remove {
+  -webkit-transition:all 0.4s linear;
+  -moz-transition:all 0.4s linear;
+  -o-transition:all 0.4s linear;
+  transition:all 0.4s linear;
+}
+
+
+.pagination > li > a,
+.pagination > li > a:hover,
+.pagination > li > a:focus{
+	color:black;
+	background-color: white;
+}
+.nav-pills > li > a,
+.nav-pills > li > a:hover,
+.nav-pills > li > a:focus{
+	border:0px solid white;
+	//border-bottom: 2px solid #3b5998;
+	border-radius:0px;
+	color: black;
+	background-color:white;
+	//padding:0px;
+	margin:0px;
+}
+.nav-pills > li > a:hover{
+	cursor:pointer;
+}
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus{
+	border:0px solid white;
+	//border-bottom: 2px solid #3b5998;
+	border-radius:0px;
+	background-color:#3b5998;
+	color:white;
+	//padding:0px;
+	margin:0px;
+}
+.nav-pills > li.active > a:hover{
+	cursor:pointer;
+}
+.glyphicon-search{
+	background-color: #3b5998;
+	color:white;
+}
+.jumbotron{
+	background-color: #FAFAFA;
+}
+.btn-secondary{
+	border:1px solid #3b5998;
+	border-radius: 0px;
+	color: #3b5998;
+	background-color: white;
+}
+.btn-secondary:hover,
+.btn-secondary:focus{
+	border:1px solid #3b5998;
+	border-radius: 0px;
+	color: #3b5998;
+	background-color: #DEDEDE;
+}
+.btn-link{
+	color:black;
+	background-color: white;
+	border-radius: 5px;
+	border:1px solid lightgray;
+	text-decoration: none;
+}
+.btn-link:hover,
+.btn-link:focus{
+	color:black;
+	background-color: #DDD;
+	border-radius: 5px;
+	border:1px solid lightgray;
+	text-decoration: none;
+}
+
+.btn-default,
+.btn-default:hover,
+.btn-default:focus{
+	border:1px solid #3b5998;
+	border-radius: 0px;
+	color: white;
+	background-color: #3b5998;
+}
+.btn:hover,
+.pagination:hover{
+	cursor:pointer;
+}
+.panel > .panel-warning,
+.panel > .panel-heading{
+    background-image: none;
+}
